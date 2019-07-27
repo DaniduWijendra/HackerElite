@@ -104,7 +104,7 @@ public void onScannedRobot(ScannedRobotEvent e) {
 	}
 	public void onHitWall(HitWallEvent e) {
 		// Replace the next line with any behavior you would like0		
-		turnRight(360);
+		turnRight(180);
 		ahead(100);
 
 		}
