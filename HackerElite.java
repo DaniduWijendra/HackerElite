@@ -34,12 +34,12 @@ public class HackerElite extends AlphaBot
 
 		// Robot main loop
 		while(true) {
-			turnRadarRight(10);
 			// Replace the next 4 lines with any behavior you would like
 			ahead(500);
 			turnGunRight(360);
 			back(300);
 			turnRight(60);
+			fire(3);
 		}
 	}
 	
