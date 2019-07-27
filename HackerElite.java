@@ -20,10 +20,9 @@ public class HackerElite extends CharlieBot
 		setRadarColor(Color.black);
 		setScanColor(Color.yellow);
 		while(true) {
-		for(int x=0;x<10;x++){
+		
 			ahead(10);
-			fire(1);
-			}
+			
 		}
 	}
 
