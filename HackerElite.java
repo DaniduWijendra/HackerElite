@@ -7,11 +7,15 @@ import robocode.*;
 /**
  * HackerElite - a robot by (your name here)
  */
-public class HackerElite extends AlphaBot
+public class HackerElite extends BravoBot
 {
 	String trackName;
 	int count =0;
+	boolean peek;
+	double Move;
+	int turnDirection;
 	double gunTurnAmt; // How much to turn our gun when searching
+		boolean movingForward;
 
 	/**
 	 * run: HackerElite's default behavior
@@ -22,6 +26,16 @@ public class HackerElite extends AlphaBot
 			
 		setAdjustRadarForRobotTurn(true);
 		setAdjustRadarForGunTurn(true);
+		Move=Math.max(getBattleFieldWidth(),getBattleFieldHeight());
+		peek=false;
+		
+		turnLeft(getHeading()%90);
+		peek=true;
+		turnRight(90);
+		
+		
+
+		
 		
 			
 		
@@ -34,12 +48,30 @@ public class HackerElite extends AlphaBot
 
 		// Robot main loop
 		while(true) {
+		
+			peek=true;
+			ahead(Move);
+			peek=false;
+			turnRight(90);
 			// Replace the next 4 lines with any behavior you would like
-			ahead(500);
-			turnGunRight(360);
-			back(300);
+			for(int x=0 ;x< 50; x++ ){
+			ahead(50);
+			fire(3);
+				}
+				
+			turnRight(35);
+				for(int x=0 ;x< 50; x++ ){
+			ahead(7);
+			fire(3);
+			}
+			for(int x=0 ;x< 20; x++ ){
+			back(8);
+			fire(3);
+			}
+			
 			turnRight(60);
 			fire(3);
+			 
 		}
 	}
 	
@@ -48,32 +80,10 @@ public class HackerElite extends AlphaBot
 	 * onScannedRobot: What to do when you see another robot
 	 */
 public void onScannedRobot(ScannedRobotEvent e) {
-		// Replace the next line with any behavior you would like
-		
-		if (trackName != null && !e.getName().equals(trackName)) {
-			return;
-		}
-		 
-		// If we don't have a target, well, now we do!
-		if (trackName == null) {
-			trackName = e.getName();
-			out.println("Tracking " + trackName);
-		}
-		
-		// This is our target.  Reset count (see the run method)
-		count = 0;
-		// If our target is too far away, turn and move toward it.
-		
-		if (e.getDistance() > 150) {
-			//sgunTurnAmt = normalRelativeAngleDegrees(e.getBearing() + (getHeading() - getRadarHeading()));
-
-			turnGunRight(gunTurnAmt); // Try changing these to setTurnGunRight,
-			turnRight(e.getBearing()); // and see how much Tracker improves...
-			// (you'll have to make Tracker an AdvancedRobot)
-			ahead(e.getDistance() - 140);
-			fire(3);
-			return;
-		}
+	 
+		for(int x= 0; x<15 ;x++){
+				fire(3);
+			}
 			
 		}
 		
@@ -87,25 +97,63 @@ public void onScannedRobot(ScannedRobotEvent e) {
 	 * onHitWall: What to do when you hit a wall
 	 */
 	public void onHitByBullet(HitByBulletEvent e) {
-		
-
-		Target= e.getName();
 		// Replace the next line with any behavior you would li
-		for(int i=0;i<90;i++)
-		{
-			turnRight(i);
-		turnLeft(i);
-		}
 		turnRight(90);
-		turnLeft(180);
-		ahead(20);
-		back(60);	// Replace the next line with any behavior you would like
-		back(10);
+		for(int i=0;i<5;i++){
+		ahead(10);
+		fire(1);
+			}
+		turnRight(90);
+		ahead(100);
+		fire(1);
+		turnRight(90);
+		ahead(100);
+		fire(1);
+		turnRight(90);
+		ahead(100);
+		fire(1);
+		
+	
+		 
+		 
 	}
+	
+	public void onHitRobot(HitRobotEvent e){
+		
+	if (e.getBearing() >= 0) {
+			turnDirection = 1;
+		} else {
+			turnDirection = -1;
+		}
+		turnRight(e.getBearing());
+
+		// Determine a shot that won't kill the robot...
+		// We want to ram him instead for bonus points
+		if (e.getEnergy() > 16) {
+			fire(3);
+		} else if (e.getEnergy() > 10) {
+			fire(2);
+		} else if (e.getEnergy() > 4) {
+			fire(1);
+		} else if (e.getEnergy() > 2) {
+			fire(.5);
+		} else if (e.getEnergy() > .4) {
+			fire(.1);
+		}
+		ahead(40); // Ram him again!
+	}
+
+
+
+	
 	public void onHitWall(HitWallEvent e) {
 		// Replace the next line with any behavior you would like0		
-		turnRight(180);
-		ahead(100);
-
+		turnRight(90);
+		for(int x=0;x<4;x++){
+			fire(3);
 		}
+		
+		ahead(100);
+		}
+	 
 }
